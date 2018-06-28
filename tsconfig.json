@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "module": "es6",
+    "jsx": "react",
+    "allowJs": false,
+    "declaration": true, // 生成对应的type文件
+    "declarationDir": "types", // 对应的生成type的文件路径
+    "removeComments": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "target": "ES5",
+    "skipLibCheck": true,
+    "moduleResolution": "node", // 使用node的模块查询机制，还有一只classic的方式
+    "lib": ["dom", "es2017", "scripthost", "es2015.promise"],
+    "typeRoots": ["types/", "node_modules/@types/", "src/**/*", "example/**/*"],
+    "baseUrl": ".",
+    "paths": {
+      "@root/*": ["*"],
+      "@/*": ["src/*"],
+    }
+  },
+  "include": ["src/**/*", "example/**/*"],
+  "exclude": ["config", "build", "node_modules"]
+}

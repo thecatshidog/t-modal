@@ -1,0 +1,21 @@
+{
+  "extends": ["tslint-plugin-prettier"],
+  "rules": {
+    "prettier": true,
+    "no-unused-variable": true,
+    "no-unused-expression": false,
+    "no-duplicate-variable": true,
+    "curly": false,
+    "class-name": true,
+    "object-literal-sort-keys": false,
+    "max-classes-per-file": [false],
+    "ordered-imports": [false],
+    "interface-name": [false],
+    "member-access": [false],
+    "triple-equals": true,
+    "quotemark": [true, "single", "jsx-double"],
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "jsx-no-multiline-js": false,
+    "indent":[true, "spaces", 2]
+  }
+}
