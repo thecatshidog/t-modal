@@ -1,4 +1,4 @@
-# rollup-ts-lib
+# t-modal
 this is typescript lib 
 
 ### usage
