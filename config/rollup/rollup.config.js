@@ -7,30 +7,19 @@ import sourcemap from 'rollup-plugin-sourcemaps';
 import autoprefixer from 'autoprefixer';
 
 const external = id => !id.startsWith('.') && !id.startsWith('/');
-// const pkg = require('../../package.json');
+const pkg = require('../../package.json');
 
-export default function createRollupConfig({ input, output, format, minify }) {
-  const exports = format === 'es' ? 'default' : 'named';
-  const globals = format === 'umd' ? {
+const name = pkg.name;
+
+export default function createRollupConfig({ input, outputDir }) {
+  const globals = {
     react: 'React',
     classnames: 'cx',
     tslib: 'tslib_1',
     'react-dom': 'ReactDOM',
     'react-transition-group': 'reactTransitionGroup',
-  } : null;
-  return {
-    input,
-    // external: Object.keys(pkg.dependencies),
-    external,
-    output: [{
-      file: output,
-      format,
-      name: 't-modal',
-      sourcemap: true,
-      exports,
-      globals,
-    }],
-    plugins: [
+  };
+  const plugins = [
       postcssModules({
         inject: {
           insertAt: 'top',
@@ -61,7 +50,39 @@ export default function createRollupConfig({ input, output, format, minify }) {
         useTsconfigDeclarationDir: true,
       }),
       sourcemap(),
-      minify ? uglify() : '',
+    ];
+  return [{
+    input,
+    // external: Object.keys(pkg.dependencies),
+    external,
+    output: [{
+      file: `${outputDir}/${name}.cjs.js`,
+      format: 'cjs',
+      name: 't-modal',
+      exports: 'named',
+      sourcemap: true,
+    }, {
+      file: `${outputDir}/${name}.esm.js`,
+      format: 'es',
+      name: 't-modal',
+      exports: 'named',
+      sourcemap: true,
+    }],
+    plugins,
+  }, {
+    input,
+    external,
+    output: {
+      file: `${outputDir}/${name}.min.js`,
+      format: 'umd',
+      name: 't-modal',
+      exports: 'named',
+      sourcemap: true,
+      globals,
+    },
+    plugins: [
+      ...plugins,
+      uglify(),
     ],
-  };
+  }];
 }

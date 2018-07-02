@@ -12,11 +12,7 @@ const entry = resolve(rootPath, './src/index.ts');
 rf(dist, () => {});
 // umd是AMD，COMMONJS，iife的通用模式
 rf(types, () => {
-  Promise.all([
-    runRollup({entry, output: 't-modal.es.js', format: 'es'}),
-    runRollup({entry, output: 't-modal.cjs.js', format: 'cjs'}),
-    runRollup({entry, output: 't-modal.min.js', format: 'umd', minify: true}),
-  ])
+  Promise.all(runRollup({entry}))
     .then(buildSuccess)
     .catch((error) => {
       // eslint-disable-next-line no-console
@@ -25,19 +21,34 @@ rf(types, () => {
     });
 });
 
-function runRollup({entry, output, format, minify = false, outputDir = dist}) {
+function runRollup({entry, outputDir = dist}) {
   const config = createRollupConfig({
     input: entry,
-    output,
-    format,
-    minify,
+    outputDir: dist,
   });
-  return rollup(config)
-    .then((bundle) => bundle.write({
-      format,
-      name: 't-modal',
-      file: resolve(outputDir, output),
-    }));
+  return config.map((itemConfig) => {
+    return rollup(itemConfig)
+    .then((bundle) =>{
+      if (Array.isArray(itemConfig.output)) {
+        itemConfig.output.map(item => {
+          bundle.write({
+            name: 't-modal',
+            file: item.file,
+            format: item.format,
+            exports: item.exports,
+          });
+        });
+      } else {
+        bundle.write({
+          name: 't-modal',
+          file: itemConfig.output.file,
+          format: itemConfig.output.format,
+          globals: itemConfig.output.globals,
+          exports: itemConfig.output.exports,
+        });
+      }
+  });
+  });
 }
 
 function buildSuccess(results) {
