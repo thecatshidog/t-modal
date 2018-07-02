@@ -3,8 +3,8 @@
   "version": "1.0.2",
   "description": "t-modal",
   "main": "dist/t-modal.cjs.js",
-  "module": "dist/t-modal.es.js",
-  "jsnext:main": "dist/t-modal.es.js",
+  "module": "dist/t-modal.esm.js",
+  "jsnext:main": "dist/t-modal.esm.js",
   "browser": "dist/t-modal.umd.js",
   "types": "types/src/index.d.ts",
   "scripts": {

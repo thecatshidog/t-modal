@@ -1,6 +1,9 @@
 # t-modal
 this is typescript lib 
 
+
+[![npm-version](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/t-modal)
+
 ### Todo
 
 - [x] Basic
