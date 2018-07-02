@@ -1,6 +1,13 @@
 # t-modal
 this is typescript lib 
 
+### Todo
+
+- [x] Basic
+- [x] no-scroll
+- [x] umd support
+
+
 ### usage
 
 ```
